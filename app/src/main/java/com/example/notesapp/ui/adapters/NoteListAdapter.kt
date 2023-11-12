@@ -11,10 +11,12 @@ import com.example.notesapp.database.model.Note
 
 class NoteListAdapter(): RecyclerView.Adapter<NoteListAdapter.NoteViewHolder>() {
 
-    var notesList = ArrayList<Note>()
+    var notesList = mutableListOf<Note>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
-        return NoteViewHolder.create(parent)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_rv_notes, parent, false)
+        return NoteViewHolder(view)
     }
 
     override fun getItemCount(): Int {
@@ -22,11 +24,13 @@ class NoteListAdapter(): RecyclerView.Adapter<NoteListAdapter.NoteViewHolder>() 
     }
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
-        TODO("Not yet implemented")
+       val note = notesList[position]
+        holder.bind(note.title, note.content)
     }
 
-    fun setData(storagedNotes: List<Note>){
-        notesList = storagedNotes as ArrayList<Note>
+    fun setData(newNote:  List<Note>){
+        notesList = newNote.toMutableList()
+        notifyDataSetChanged()
     }
 
     class NoteViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
