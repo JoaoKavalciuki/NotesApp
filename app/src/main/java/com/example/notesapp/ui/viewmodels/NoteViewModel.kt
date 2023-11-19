@@ -12,10 +12,17 @@ import kotlinx.coroutines.launch
 class NoteViewModel(private val repository: NoteRepository): ViewModel() {
 
     val allNotes : LiveData<List<Note>> = repository.allNotes.asLiveData()
-
+    fun  searchedNote(query: String?): LiveData<List<Note>> = repository.searchedNote(query)
     fun insert(note: Note) = viewModelScope.launch{
-        repository.insert(note)
+        repository.insertNote(note)
 
+    }
+    fun updateNote(note: Note) = viewModelScope.launch {
+        repository.updateNote(note)
+    }
+
+    fun deleteNote(note: Note) = viewModelScope.launch {
+        repository.deleteNote(note)
     }
 }
 
