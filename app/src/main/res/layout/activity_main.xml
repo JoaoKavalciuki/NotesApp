@@ -7,36 +7,36 @@
     tools:context=".MainActivity">
 
 
-
-    <GridLayout
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/tbLayout"
         android:layout_width="match_parent"
-        android:useDefaultMargins="true"
-        android:layout_height="match_parent">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvNotes"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/item_rv_notes" />
-    </GridLayout>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnAddNota"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/BtnAddColor"
-        android:contentDescription="@string/contentDescBtn"
-        android:src="@drawable/add_vector"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:fitsSystemWindows="true">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            app:title="@string/app_name"
+            app:titleTextColor="@color/black"
+            android:background="@color/white"
+            app:menu="@menu/home_menu"/>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        />
+        app:layout_constraintTop_toBottomOf="@id/tbLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/navigation_graph" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
