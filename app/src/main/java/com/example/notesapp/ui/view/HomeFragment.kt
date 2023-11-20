@@ -5,8 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.notesapp.MainActivity
@@ -16,7 +19,7 @@ import com.example.notesapp.databinding.FragmentHomeBinding
 import com.example.notesapp.ui.adapters.NoteListAdapter
 import com.example.notesapp.ui.viewmodels.NoteViewModel
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(R.layout.fragment_home) {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var noteViewModel: NoteViewModel
     private lateinit var noteAdapter: NoteListAdapter
@@ -26,7 +29,19 @@ class HomeFragment : Fragment() {
         arguments?.let {
 
         }
-        setHasOptionsMenu(true)
+
+        val menuHost: MenuHost = requireActivity()
+
+        menuHost.addMenuProvider(object: MenuProvider{
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.home_menu, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
 
     override fun onCreateView(
@@ -44,15 +59,9 @@ class HomeFragment : Fragment() {
         noteViewModel = (activity as MainActivity).noteViewModel
         setUpRecyclerView()
 
-
         binding.btnAddNote.setOnClickListener {
             it.findNavController().navigate(R.id.action_homeFragment_to_newNoteFragment)
         }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.home_menu, menu)
     }
 
     override fun onPause() {
