@@ -4,10 +4,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notesapp.R
 import com.example.notesapp.database.model.Note
+import com.example.notesapp.ui.view.HomeFragment
+import com.example.notesapp.ui.view.HomeFragmentDirections
 
 class NoteListAdapter(): RecyclerView.Adapter<NoteListAdapter.NoteViewHolder>() {
 
@@ -24,8 +27,14 @@ class NoteListAdapter(): RecyclerView.Adapter<NoteListAdapter.NoteViewHolder>() 
     }
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
-       val note = notesList[position]
-        holder.bind(note.title, note.content)
+       val currentNote = notesList[position]
+        holder.bind(currentNote.title, currentNote.content)
+
+        holder.itemView.setOnClickListener {
+            val direction = HomeFragmentDirections.actionHomeFragmentToUpdateNoteFragment(currentNote)
+
+            it.findNavController().navigate(direction)
+        }
     }
 
     fun setData(newNote:  List<Note>){
@@ -42,12 +51,5 @@ class NoteListAdapter(): RecyclerView.Adapter<NoteListAdapter.NoteViewHolder>() 
             noteContent.text = content
         }
 
-        companion object{
-            fun create(parent: ViewGroup): NoteViewHolder{
-                val view : View = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_rv_notes, parent, false)
-                return NoteViewHolder(view)
-            }
-        }
     }
 }
