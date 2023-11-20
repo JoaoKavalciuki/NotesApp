@@ -40,10 +40,7 @@ class NewNoteFragment : Fragment(R.layout.fragment_new_note) {
 
         noteViewModel = (activity as MainActivity).noteViewModel
         mView = view
-    }
 
-    override fun onResume() {
-        super.onResume()
         binding.fabSaveNote.setOnClickListener {
             saveNote(mView)
         }
@@ -57,7 +54,7 @@ class NewNoteFragment : Fragment(R.layout.fragment_new_note) {
             val title = binding.etTitle.text.toString().trim()
             val content = binding.etContent.text.toString()
 
-            noteViewModel.insert(Note(title, content))
+            noteViewModel.insert(Note(0, title, content))
 
             Snackbar.make(view, "Nota salva com sucesso", Snackbar.LENGTH_SHORT).show()
             view.findNavController().navigate(R.id.action_newNoteFragment_to_homeFragment)
