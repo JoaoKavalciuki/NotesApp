@@ -5,4 +5,8 @@
     <string name="txt_nova_nota">Digite o título da nova nota</string>
     <string name="txt_conteudo_nota">Digite o conteúdo da nova nota</string>
     <string name="txt_salvar_nota">Salvar nota</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="empty_notes">Não há notas no app</string>
+    <string name="content_description_text">Botão para deletar nota</string>
 </resources>

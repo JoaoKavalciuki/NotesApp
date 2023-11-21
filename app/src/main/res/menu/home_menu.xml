@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/btnSearch"
-        android:title="searchBtn"
+        android:title="Search button"
         android:icon="@drawable/ic_search"
         app:showAsAction="always"
 
