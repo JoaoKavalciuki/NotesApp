@@ -8,10 +8,12 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.room.Query
 import com.example.notesapp.MainActivity
 import com.example.notesapp.R
 import com.example.notesapp.database.model.Note
@@ -19,29 +21,14 @@ import com.example.notesapp.databinding.FragmentHomeBinding
 import com.example.notesapp.ui.adapters.NoteListAdapter
 import com.example.notesapp.ui.viewmodels.NoteViewModel
 
-class HomeFragment : Fragment(R.layout.fragment_home) {
+class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextListener {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var noteViewModel: NoteViewModel
     private lateinit var noteAdapter: NoteListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
 
-        }
-
-        val menuHost: MenuHost = requireActivity()
-
-        menuHost.addMenuProvider(object: MenuProvider{
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.home_menu, menu)
-            }
-
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                TODO("Not yet implemented")
-            }
-
-        })
     }
 
     override fun onCreateView(
@@ -59,6 +46,24 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         noteViewModel = (activity as MainActivity).noteViewModel
         setUpRecyclerView()
 
+        val menuHost: MenuHost = requireActivity()
+
+        menuHost.addMenuProvider(object: MenuProvider{
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menu.clear()
+                menuInflater.inflate(R.menu.home_menu, menu)
+
+                val mMenuSearch = menu.findItem(R.id.btnSearch).actionView as SearchView
+                mMenuSearch.isSubmitButtonEnabled = true
+                mMenuSearch.setOnQueryTextListener(this@HomeFragment)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return true
+            }
+
+        })
+
         binding.btnAddNote.setOnClickListener {
             it.findNavController().navigate(R.id.action_homeFragment_to_newNoteFragment)
         }
@@ -66,6 +71,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     override fun onPause() {
         super.onPause()
+
     }
 
     override fun onDestroy() {
@@ -99,5 +105,30 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             binding.rvNotes.visibility = View.VISIBLE
             binding.cvHomeFragment.visibility = View.GONE
         }
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        if(query != null){
+            searchNote(query)
+        }
+
+
+        return true
+    }
+
+    override fun onQueryTextChange(newText: String?): Boolean {
+        if(newText != null){
+            searchNote(newText)
+        }
+        return true
+    }
+
+    private fun searchNote(query: String?){
+        val searchQuery = "%$query%"
+
+        noteViewModel.searchedNote(searchQuery).observe(this, {
+            noteList ->
+            noteAdapter.setData(noteList)
+        })
     }
 }
