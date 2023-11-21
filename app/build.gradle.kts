@@ -57,11 +57,20 @@ dependencies {
     //RoomDataBase dependencies
     implementation("androidx.room:room-ktx:2.6.0")
     ksp("androidx.room:room-compiler:2.6.0")
-    
 
+    //viewmodels
+    implementation("androidx.activity:activity-ktx:1.8.0")
 
     //lifecycle dependencies
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
     implementation("androidx.lifecycle:lifecycle-common-java8:2.6.2")
+
+    //scalable unit text size
+    implementation("com.intuit.ssp:ssp-android:1.0.6")
+
+    //scalable unit size
+    implementation("com.intuit.sdp:sdp-android:1.0.6")
+
+    implementation("com.google.android.material:material:1.10.0")
 }

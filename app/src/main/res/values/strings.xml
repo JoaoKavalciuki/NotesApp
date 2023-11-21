@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">NotesApp</string>
+    <string name="txt_notes">Texto de notas</string>
+    <string name="contentDescBtn">Botão para adicionar notas</string>
+    <string name="txt_nova_nota">Digite o título da nova nota</string>
+    <string name="txt_conteudo_nota">Digite o conteúdo da nova nota</string>
+    <string name="txt_salvar_nota">Salvar nota</string>
 </resources>
